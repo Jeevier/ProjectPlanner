@@ -26,15 +26,17 @@ const Bucket = ({ name, highlights, _id, setBuckets, buckets }) => {
   return (
     <Grid item mt={3} xs={12} sm={6}>
       <div className="bucket">
-       
-        <div
-          className="bucket-heading"
-          onClick={() => {
-            setIsEditModal(true);
-          }}
-        >
-          {name} Edit
-        </div> 
+        <div className="bucket-header">
+          <div className="bucket-header__heading">{name}</div>
+          <div
+            onClick={() => {
+              setIsEditModal(true);
+            }}
+            className="bucket-header__edit"
+          >
+            Edit
+          </div>
+        </div>
 
         <Modal
           open={isEditModal}
@@ -56,30 +58,32 @@ const Bucket = ({ name, highlights, _id, setBuckets, buckets }) => {
         <Droppable droppableId={_id.toString()}>
           {(provided) => {
             return (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {highlights.length == 0 && (
-                <div className="single-highlight">Nothing to see here</div>
-              )}
-              {highlights.map((highlight, index) => {
-                return (
-                  <Highlight
-                    key={highlight._id.toString()}
-                    index={index}
-                    buckets={buckets}
-                    setBuckets={setBuckets}
-                    highlights={highlights}
-                    _id={_id}
-                    hId={highlight._id}
-                    hName={highlight.hName}
-                    highlight={highlight}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </div>
-          )}}
-        </Droppable>
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {highlights.length === 0 && (
+                  <div className="single-highlight">Nothing to see here</div>
+                )}
 
+                {highlights.length !== 0 &&
+                  highlights.map((highlight, index) => {
+                    return (
+                      <Highlight
+                        key={highlight._id.toString()}
+                        index={index}
+                        buckets={buckets}
+                        setBuckets={setBuckets}
+                        highlights={highlights}
+                        _id={_id}
+                        hId={highlight._id}
+                        hName={highlight.hName}
+                        highlight={highlight}
+                      />
+                    );
+                  })}
+                {provided.placeholder}
+              </div>
+            );
+          }}
+        </Droppable>
       </div>
     </Grid>
   );

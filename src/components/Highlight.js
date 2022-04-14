@@ -14,11 +14,11 @@ const Highlight = ({
   hId,
   buckets,
   index,
-  highlight
+  highlight,
 }) => {
   const [edit, setEdit] = useState(false);
   const [editedText, setEditedText] = useState(hName);
-
+  //   const colorArray = ["#FF99FF", "#FFFF99", "#99FFFF", "#99FF99", "#FF9999"];
   const handleDelete = () => {
     const filteredHighlights = highlights.filter((highlight) => {
       return highlight._id !== hId;
@@ -33,11 +33,12 @@ const Highlight = ({
   const handleEdit = () => {
     setEdit(false);
     const editedHighlight = highlights.find((highlight) => {
-      return highlight._id == hId;
+      return highlight._id === hId;
     });
     editedHighlight.hName = editedText;
     setBuckets((prev) => [...prev]);
   };
+
   return (
     <Draggable draggableId={highlight._id.toString()} index={index}>
       {(provided) => {
@@ -59,15 +60,16 @@ const Highlight = ({
               <div className="single-highlight__text">{hName}</div>
             )}
             {edit ? (
-              <CloseIcon onClick={handleEdit} />
+              <CloseIcon style={{ cursor: "pointer" }} onClick={handleEdit} />
             ) : (
               <EditIcon
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   setEdit(true);
                 }}
               />
             )}
-            <DeleteIcon onClick={handleDelete} />
+            <DeleteIcon style={{ cursor: "pointer" }} onClick={handleDelete} />
           </div>
         );
       }}

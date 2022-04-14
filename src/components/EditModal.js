@@ -3,13 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
-const BucketModal = ({
-  setBuckets,
-  name,
-  _id,
-  buckets,
-  setIsEditModal,
-}) => {
+const BucketModal = ({ setBuckets, name, _id, buckets, setIsEditModal }) => {
   const bucketName = useRef(null);
   const newHighlights = useRef(null);
 
@@ -20,7 +14,7 @@ const BucketModal = ({
     });
 
     const text = newHighlights.current.value;
-    const splittedHighlights = text.split(",");
+    const splittedHighlights = text.split("&");
     let finalHighlights = splittedHighlights.map((highlight) => {
       if (highlight) {
         return { _id: uuidv4(), hName: highlight };
@@ -42,12 +36,12 @@ const BucketModal = ({
     setBuckets(filteredBucktes);
   };
   return (
-    <div >
+    <div>
       <form onSubmit={handleSubmit}>
         <p>Change Bucket Name:</p>
         <TextField inputRef={bucketName} required defaultValue={name} />
         <p>Add New Highlights:</p>
-        <small>Separated by Comma</small>
+        <small>Separated by (&amp;)</small>
         <br />
         <TextField fullWidth inputRef={newHighlights} multiline rows={4} />
         <br />

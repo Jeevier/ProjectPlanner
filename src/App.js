@@ -6,7 +6,6 @@ import BucketModal from "./components/BucketModal";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { DragDropContext } from "react-beautiful-dnd";
-import "./components/style.css";
 
 const style = {
   position: "absolute",
@@ -26,11 +25,9 @@ function App() {
   const [isAddModal, setIsAddModal] = useState(false);
   const onDragEnd = (result) => {
     const { destination, source } = result;
-
     if (!destination) {
       return;
     }
-
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -47,18 +44,22 @@ function App() {
     ).highlights;
     startArr.splice(source.index, 1);
     targetArr.splice(destination.index, 0, movedItem);
+
     setBuckets((prev) => [...prev]);
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
-        <div>Project Planning</div>
-        <div
-          onClick={() => {
-            setIsAddModal(true);
-          }}
-        >
-          Create a Bucket: +
+        <div className="top-container">
+          <div className="top-container__heading">Project Planning</div>
+          <div
+            className="top-container__button"
+            onClick={() => {
+              setIsAddModal(true);
+            }}
+          >
+            Let's Create a Bucket
+          </div>
         </div>
         <Modal
           open={isAddModal}

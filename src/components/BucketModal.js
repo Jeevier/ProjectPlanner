@@ -3,21 +3,21 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
-const BucketModal = ({ setBuckets ,setIsAddModal}) => {
+const BucketModal = ({ setBuckets, setIsAddModal }) => {
   const bucketName = useRef(null);
   const newHighlights = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const text = newHighlights.current.value;
-    const splittedHighlights = text.split(",");
-    let finalHighlights = splittedHighlights.map((temp) => {
-      if (temp) {
-        return { _id: uuidv4(), hName: temp };
-      }
-      return undefined;
+    const splittedHighlights = text.split("&");
+    const cleanedHighlights = splittedHighlights.filter(function (e) {
+      return e === 0 || e;
     });
-    if (finalHighlights[0] === undefined) finalHighlights = [];
+    const finalHighlights = cleanedHighlights.map((ele) => {
+      return { _id: uuidv4(), hName: ele };
+    });
+    console.log(finalHighlights);
     setBuckets((prev) => {
       return [
         ...prev,
@@ -36,7 +36,7 @@ const BucketModal = ({ setBuckets ,setIsAddModal}) => {
         <p>Bucket Name:</p>
         <TextField fullWidth inputRef={bucketName} required />
         <p>Highlights:</p>
-        <small>Separated by Comma</small>
+        <small>Separated by (&amp;)</small>
         <br />
         <TextField fullWidth inputRef={newHighlights} multiline rows={4} />
 
