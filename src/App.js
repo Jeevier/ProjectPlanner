@@ -3,9 +3,11 @@ import Grid from "@mui/material/Grid";
 import "./App.css";
 import Bucket from "./components/Bucket";
 import BucketModal from "./components/BucketModal";
+import HighlightModal from "./components/HighlightModal";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { DragDropContext } from "react-beautiful-dnd";
+import Standard from "./components/Standard";
 
 const style = {
   position: "absolute",
@@ -23,8 +25,10 @@ const style = {
 function App() {
   const [buckets, setBuckets] = useState([]);
   const [bucketList, setBucketList] = useState([]);
+  const [randomHighlights, setRandomHighlights] = useState([]);
   const [isGroupView, setIsGroupView] = useState(false);
-  const [isAddModal, setIsAddModal] = useState(false);
+  const [isBucketModal, setIsBucketModal] = useState(false);
+  const [isHighlightModal, setIsHighlightModal] = useState(false);
   const onDragEnd = (result) => {
     const { destination, source } = result;
     if (!destination) {
@@ -49,8 +53,6 @@ function App() {
 
     setBuckets((prev) => [...prev]);
   };
-  console.log(buckets)
-  console.log(bucketList)
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
@@ -60,59 +62,86 @@ function App() {
             <div
               className="top-container__button"
               onClick={() => {
-                setIsAddModal(true);
+                setIsHighlightModal(true);
               }}
             >
-            Create a Highlight
+              Create a Highlight
             </div>
             <div
               className="top-container__button"
               onClick={() => {
-                setIsAddModal(true);
+                setIsBucketModal(true);
               }}
             >
-            Create a Bucket
+              Create a Bucket
             </div>
             <div
               className="top-container__button"
               onClick={() => {
-                setIsAddModal(true);
+                setIsGroupView(!isGroupView);
               }}
             >
               {isGroupView ? "UnGroup Highlights" : "Group Highlights"}
             </div>
           </div>
         </div>
+
+        {/* BucketModal */}
         <Modal
-          open={isAddModal}
+          open={isBucketModal}
           onClose={() => {
-            setIsAddModal(false);
+            setIsBucketModal(false);
           }}
         >
           <Box sx={style}>
             <BucketModal
               setBuckets={setBuckets}
-              setIsAddModal={setIsAddModal}
+              setIsBucketModal={setIsBucketModal}
               setBucketList={setBucketList}
             />
           </Box>
         </Modal>
-        <Grid container>
-          {buckets.map((bucket) => {
-            return (
-              <Bucket
-                name={bucket.name}
-                highlights={bucket.highlights}
-                key={bucket._id.toString()}
-                _id={bucket._id}
-                setBuckets={setBuckets}
-                buckets={buckets}
-                setBucketList={setBucketList}
-                bucketList={bucketList}
-              />
-            );
-          })}
-        </Grid>
+
+        {/* HighlightModal */}
+        <Modal
+          open={isHighlightModal}
+          onClose={() => {
+            setIsHighlightModal(false);
+          }}
+        >
+          <Box sx={style}>
+            <HighlightModal
+              setRandomHighlights={setRandomHighlights}
+              setIsHighlightModal={setIsHighlightModal}
+            />
+          </Box>
+        </Modal>
+
+        {isGroupView ? (
+          <Grid container>
+            {buckets.map((bucket) => {
+              return (
+                <Bucket
+                  name={bucket.name}
+                  highlights={bucket.highlights}
+                  key={bucket._id.toString()}
+                  _id={bucket._id}
+                  setBuckets={setBuckets}
+                  buckets={buckets}
+                  setBucketList={setBucketList}
+                  bucketList={bucketList}
+                />
+              );
+            })}
+          </Grid>
+        ) : (
+          <Standard
+            buckets={buckets}
+            setBuckets={setBuckets}
+            setRandomHighlights={setRandomHighlights}
+            randomHighlights={randomHighlights}
+          />
+        )}
       </div>
     </DragDropContext>
   );

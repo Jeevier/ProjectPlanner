@@ -29,7 +29,12 @@ const BucketModal = ({
       return e === 0 || e;
     });
     const finalHighlights = cleanedHighlights.map((ele) => {
-      return { _id: uuidv4(), hName: ele };
+      return {
+        _id: uuidv4(),
+        hName: ele,
+        gId: _id,
+        gName: bucketName.current.value,
+      };
     });
 
     editedItem.name = bucketName.current.value;

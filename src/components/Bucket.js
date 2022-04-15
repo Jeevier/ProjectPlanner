@@ -20,7 +20,15 @@ const style = {
   p: 4,
 };
 
-const Bucket = ({ name, highlights, _id, setBuckets, buckets , setBucketList,bucketList}) => {
+const Bucket = ({
+  name,
+  highlights,
+  _id,
+  setBuckets,
+  buckets,
+  setBucketList,
+  bucketList,
+}) => {
   const [isEditModal, setIsEditModal] = useState(false);
 
   return (
