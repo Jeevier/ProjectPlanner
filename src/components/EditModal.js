@@ -3,7 +3,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
-const BucketModal = ({ setBuckets, name, _id, buckets, setIsEditModal }) => {
+const BucketModal = ({
+  setBuckets,
+  name,
+  _id,
+  buckets,
+  setIsEditModal,
+  setBucketList,
+  bucketList,
+}) => {
   const bucketName = useRef(null);
   const newHighlights = useRef(null);
 
@@ -12,28 +20,35 @@ const BucketModal = ({ setBuckets, name, _id, buckets, setIsEditModal }) => {
     const editedItem = buckets.find((bucket) => {
       return bucket._id === _id;
     });
-
+    const editedItemInList = bucketList.find((bucket) => {
+      return bucket._id === _id;
+    });
     const text = newHighlights.current.value;
     const splittedHighlights = text.split("&");
-    let finalHighlights = splittedHighlights.map((highlight) => {
-      if (highlight) {
-        return { _id: uuidv4(), hName: highlight };
-      }
-      return undefined;
+    const cleanedHighlights = splittedHighlights.filter(function (e) {
+      return e === 0 || e;
     });
-    if (finalHighlights[0] === undefined) finalHighlights = [];
+    const finalHighlights = cleanedHighlights.map((ele) => {
+      return { _id: uuidv4(), hName: ele };
+    });
 
     editedItem.name = bucketName.current.value;
+    editedItemInList.name = bucketName.current.value;
     editedItem.highlights = [...editedItem.highlights, ...finalHighlights];
     setIsEditModal(false);
     setBuckets((prev) => [...prev]);
+    setBucketList((prev) => [...prev]);
   };
   const handleDelete = () => {
-    const filteredBucktes = buckets.filter((bucket) => {
+    const filteredBuckets = buckets.filter((bucket) => {
+      return bucket._id !== _id;
+    });
+    const filteredBucketList = bucketList.filter((bucket) => {
       return bucket._id !== _id;
     });
     setIsEditModal(false);
-    setBuckets(filteredBucktes);
+    setBuckets(filteredBuckets);
+    setBucketList(filteredBucketList);
   };
   return (
     <div>

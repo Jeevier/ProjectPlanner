@@ -22,6 +22,8 @@ const style = {
 
 function App() {
   const [buckets, setBuckets] = useState([]);
+  const [bucketList, setBucketList] = useState([]);
+  const [isGroupView, setIsGroupView] = useState(false);
   const [isAddModal, setIsAddModal] = useState(false);
   const onDragEnd = (result) => {
     const { destination, source } = result;
@@ -47,18 +49,38 @@ function App() {
 
     setBuckets((prev) => [...prev]);
   };
+  console.log(buckets)
+  console.log(bucketList)
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <div className="top-container">
           <div className="top-container__heading">Project Planning</div>
-          <div
-            className="top-container__button"
-            onClick={() => {
-              setIsAddModal(true);
-            }}
-          >
-            Let's Create a Bucket
+          <div className="top-container__button-container">
+            <div
+              className="top-container__button"
+              onClick={() => {
+                setIsAddModal(true);
+              }}
+            >
+            Create a Highlight
+            </div>
+            <div
+              className="top-container__button"
+              onClick={() => {
+                setIsAddModal(true);
+              }}
+            >
+            Create a Bucket
+            </div>
+            <div
+              className="top-container__button"
+              onClick={() => {
+                setIsAddModal(true);
+              }}
+            >
+              {isGroupView ? "UnGroup Highlights" : "Group Highlights"}
+            </div>
           </div>
         </div>
         <Modal
@@ -71,6 +93,7 @@ function App() {
             <BucketModal
               setBuckets={setBuckets}
               setIsAddModal={setIsAddModal}
+              setBucketList={setBucketList}
             />
           </Box>
         </Modal>
@@ -84,6 +107,8 @@ function App() {
                 _id={bucket._id}
                 setBuckets={setBuckets}
                 buckets={buckets}
+                setBucketList={setBucketList}
+                bucketList={bucketList}
               />
             );
           })}
