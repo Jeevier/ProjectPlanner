@@ -12,6 +12,7 @@
   padding: 0.6rem;
   font-family: "Secular One", sans-serif;
   font-size: 1.8rem;
+  text-transform:uppercase;
 }
 .bucket-header__edit {
   cursor: pointer;

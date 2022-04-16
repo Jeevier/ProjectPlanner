@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
-import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
 import { Draggable } from "react-beautiful-dnd";
+import Tooltip from "@mui/material/Tooltip";
 import "./style.css";
 
 const Highlight = ({
@@ -60,16 +61,25 @@ const Highlight = ({
               <div className="single-highlight__text">{hName}</div>
             )}
             {edit ? (
-              <CloseIcon style={{ cursor: "pointer" }} onClick={handleEdit} />
+              <Tooltip title="Confirm" placement="top-start" arrow>
+                <DoneIcon style={{ cursor: "pointer" }} onClick={handleEdit} />
+              </Tooltip>
             ) : (
-              <EditIcon
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setEdit(true);
-                }}
-              />
+              <Tooltip title="Edit" placement="top-start" arrow>
+                <EditIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setEdit(true);
+                  }}
+                />
+              </Tooltip>
             )}
-            <DeleteIcon style={{ cursor: "pointer" }} onClick={handleDelete} />
+            <Tooltip title="Delete" placement="top-start" arrow>
+              <DeleteIcon
+                style={{ cursor: "pointer" }}
+                onClick={handleDelete}
+              />
+            </Tooltip>
           </div>
         );
       }}

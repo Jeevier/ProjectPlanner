@@ -45,14 +45,18 @@ function App() {
       (bucket) => bucket._id === source.droppableId
     ).highlights;
     let movedItem = startArr[source.index];
-    let targetArr = buckets.find(
+    let targetBucket = buckets.find(
       (bucket) => bucket._id === destination.droppableId
-    ).highlights;
+    );
+    let targetArr = targetBucket.highlights;
+    movedItem.gName = targetBucket.name;
+    movedItem.gId = targetBucket._id;
     startArr.splice(source.index, 1);
     targetArr.splice(destination.index, 0, movedItem);
 
     setBuckets((prev) => [...prev]);
   };
+  console.log(buckets);
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
@@ -80,6 +84,9 @@ function App() {
               onClick={() => {
                 setIsGroupView(!isGroupView);
               }}
+              style={
+                isGroupView ? { backgroundColor: "#dedede", color: "#111" } : {}
+              }
             >
               {isGroupView ? "UnGroup Highlights" : "Group Highlights"}
             </div>
@@ -140,6 +147,7 @@ function App() {
             setBuckets={setBuckets}
             setRandomHighlights={setRandomHighlights}
             randomHighlights={randomHighlights}
+            bucketList={bucketList}
           />
         )}
       </div>
