@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import StandardHighlight from "./StandardHighlight";
 import Grid from "@mui/material/Grid";
 // import { Droppable } from "react-beautiful-dnd";
+import oops from "../assets/oops.png";
 import "./style.css";
 import "./standard.css";
 
@@ -15,14 +16,14 @@ const Standard = ({
   const [allHighlights, setAllHighlights] = useState([]);
   useEffect(() => {
     let result = [];
-    if (buckets.length > 0) {
+    if (buckets && buckets.length > 0) {
       buckets.forEach((bucket) => {
         bucket.highlights.forEach((highlight) => {
           result.push({ ...highlight });
         });
       });
     }
-    if (randomHighlights.length > 0) {
+    if (randomHighlights && randomHighlights.length > 0) {
       result = [...result, ...randomHighlights];
     }
     setAllHighlights([...result]);
@@ -35,20 +36,27 @@ const Standard = ({
       {/* return ( */}
       {/* <div ref={provided.innerRef} {...provided.droppableProps}> */}
       <Grid container>
-        {allHighlights.map((highlight, index) => {
-          return (
-            <StandardHighlight
-              key={highlight._id.toString()}
-              index={index}
-              buckets={buckets}
-              randomHighlights={randomHighlights}
-              setRandomHighlights={setRandomHighlights}
-              setBuckets={setBuckets}
-              highlight={highlight}
-              bucketList={bucketList}
-            />
-          );
-        })}
+        {allHighlights.length === 0 && (
+          <Grid item xs={12} className="empty-container">
+            <img src={oops} alt="oops" />
+            <div>No Highlights Present!!</div>
+            </Grid>
+        )}
+        {allHighlights.length !== 0 &&
+          allHighlights.map((highlight, index) => {
+            return (
+              <StandardHighlight
+                key={highlight._id.toString()}
+                index={index}
+                buckets={buckets}
+                randomHighlights={randomHighlights}
+                setRandomHighlights={setRandomHighlights}
+                setBuckets={setBuckets}
+                highlight={highlight}
+                bucketList={bucketList}
+              />
+            );
+          })}
       </Grid>
       {/* {provided.placeholder} */}
       {/* </div> */}

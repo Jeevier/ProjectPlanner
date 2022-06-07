@@ -3,7 +3,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
 
-const HighlightModal = ({ setIsHighlightModal, setRandomHighlights }) => {
+const HighlightModal = ({
+  setIsHighlightModal,
+  setRandomHighlights,
+  randomHighlights,
+}) => {
   const newHighlights = useRef(null);
 
   const handleSubmit = (e) => {
@@ -18,9 +22,12 @@ const HighlightModal = ({ setIsHighlightModal, setRandomHighlights }) => {
       return { _id: uuidv4(), hName: ele };
     });
 
-    setRandomHighlights((prev) => {
-      return [...prev, ...finalHighlights];
-    });
+    if (randomHighlights && randomHighlights.length > 0) {
+      setRandomHighlights((prev) => {
+        return [...prev, ...finalHighlights];
+      });
+    } else setRandomHighlights(finalHighlights);
+
     setIsHighlightModal(false);
   };
   return (

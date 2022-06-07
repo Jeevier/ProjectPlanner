@@ -1,0 +1,32 @@
+.home-nav {
+  position: static;
+  top: 0;
+  left: 0;
+  padding: 10px 40px;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  font-size: 25px;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  height: 40px;
+}
+.home-nav_logo {
+  display: flex;
+  align-items: center;
+}
+.home-nav_logo div {
+  margin-left: 5px;
+}
+.auth-btn {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  cursor: pointer;
+  margin: 5px;
+}

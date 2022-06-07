@@ -180,17 +180,18 @@ const StandardHighlight = ({
               anchorEl={anchorEl}
               TransitionComponent={Fade}
             >
-              {bucketList.map((bucket) => {
-                return (
-                  <MenuItem
-                    data-my-value={bucket._id}
-                    key={bucket._id}
-                    onClick={(e) => handleMove(e, highlight)}
-                  >
-                    {bucket.name}
-                  </MenuItem>
-                );
-              })}
+              {bucketList &&
+                bucketList.map((bucket) => {
+                  return (
+                    <MenuItem
+                      data-my-value={bucket._id}
+                      key={bucket._id}
+                      onClick={(e) => handleMove(e, highlight)}
+                    >
+                      {bucket.name}
+                    </MenuItem>
+                  );
+                })}
               {bucketList.length === 0 && <MenuItem>No buckets!</MenuItem>}
             </Menu>
           </div>

@@ -70,7 +70,7 @@ const Bucket = ({
             return (
               <div ref={provided.innerRef} {...provided.droppableProps}>
                 {highlights.length === 0 && (
-                  <div className="single-highlight">Nothing to see here</div>
+                  <div className="single-highlight">No Highlight Present</div>
                 )}
 
                 {highlights.length !== 0 &&
