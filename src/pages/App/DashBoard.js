@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import "./DashBoard.css";
+import oops from "../../assets/oops.png"
 import Bucket from "../../components/Bucket";
 import BucketModal from "../../components/BucketModal";
 import HighlightModal from "../../components/HighlightModal";
@@ -203,6 +204,12 @@ function App() {
 
           {isGroupView ? (
             <Grid container>
+              {buckets.length===0 && 
+                <Grid item xs={12} style={{ textAlign: "center"}}>
+                <img src={oops} alt="oops" style={{width:"300px"}} />
+                <div style={{  fontSize: "2rem"}}>No Buckets Present!!</div>
+                </Grid>
+              }
               {buckets.map((bucket) => {
                 return (
                   <Bucket
